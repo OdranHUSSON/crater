@@ -674,6 +674,7 @@
       "address": "Adresse",
       "zip": "Zip",
       "save": "sauver",
+      "siret" : "Numéro de siret",
       "updated_message": "Informations sur la société mises à jour avec succès"
     },
     "account_settings": {

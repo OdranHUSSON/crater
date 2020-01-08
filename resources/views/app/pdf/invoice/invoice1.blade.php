@@ -411,6 +411,12 @@
                         <td class="textStyle1" style="text-align: left; color: #55547A">Due date</td>
                         <td class="textStyle2"> &nbsp;{{$invoice->formattedDueDate}}</td>
                     </tr>
+                    @if($siret)
+                        <tr>
+                            <td class="textStyle1" style="text-align: left; color: #55547A">Siret</td>
+                            <td class="textStyle2"> &nbsp;{{$siret}}</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
             <div style="clear: both;"></div>

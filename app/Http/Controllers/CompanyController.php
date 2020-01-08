@@ -94,6 +94,7 @@ class CompanyController extends Controller
         $user = User::find(1);
         $company = $user->company;
         $company->name = $request->name;
+        $company->siret = $request->siret;
         $company->save();
 
         if ($request->has('logo')) {
@@ -101,7 +102,7 @@ class CompanyController extends Controller
             $company->addMediaFromRequest('logo')->toMediaCollection('logo');
         }
 
-        $fields = $request->only(['address_street_1', 'address_street_2', 'city', 'state', 'country_id', 'zip', 'phone']);
+        $fields = $request->only(['address_street_1', 'address_street_2', 'city', 'state', 'country_id', 'zip', 'phone', 'siret']);
         $address = Address::updateOrCreate(['user_id' => 1], $fields);
         $user = User::with(['addresses', 'addresses.country', 'company'])->find(1);
 

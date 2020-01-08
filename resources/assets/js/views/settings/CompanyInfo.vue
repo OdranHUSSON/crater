@@ -47,6 +47,18 @@
             </div>
           </div>
           <div class="col-md-6 mb-4">
+            <label class="input-label">{{ $tc('settings.company_info.siret') }}</label> <span class="text-danger"> * </span>
+            <base-input
+              v-model="formData.siret"
+              :invalid="$v.formData.siret.$error"
+              :placeholder="$t('settings.company_info.siret')"
+              @input="$v.formData.siret.$touch()"
+            />
+            <div v-if="$v.formData.siret.$error">
+              <span v-if="!$v.formData.siret.required" class="text-danger">{{ $tc('validation.required') }}</span>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
             <label class="input-label">{{ $tc('settings.company_info.phone') }}</label>
             <base-input
               v-model="formData.phone"
@@ -170,7 +182,8 @@ export default {
         website: '',
         country_id: null,
         state: '',
-        city: ''
+        city: '',
+        siret: ''
       },
       isLoading: false,
       isHidden: false,
@@ -206,6 +219,9 @@ export default {
       },
       address_street_2: {
         maxLength: maxLength(255)
+      },
+      siret: {
+        maxLength: maxLength(255)
       }
     }
   },
@@ -232,6 +248,7 @@ export default {
       let response = await this.loadData()
       this.isFetchingData = true
       this.formData.name = response.data.user.company.name
+      this.formData.siret = response.data.user.company.siret
       this.formData.address_street_1 = response.data.user.addresses[0].address_street_1
       this.formData.address_street_2 = response.data.user.addresses[0].address_street_2
       this.formData.zip = response.data.user.addresses[0].zip
