@@ -1,6 +1,13 @@
-## Fork by Odran HUSSON
+# Fork by Odran HUSSON
 
-This fork adds the missing informations that are mandatory in France, improve translations, new invoice templates
+Changes in this fork :
+ - fix missing informations that are mandatory in France for invoices 
+ - improve french translations
+ - new invoice templates WIP
+ - MULTIACCOUNT
+
+
+## Crater
 
 <img src="https://res.cloudinary.com/bytefury/image/upload/v1574149856/Crater/craterframe.png">
 
