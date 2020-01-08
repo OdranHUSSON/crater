@@ -26,5 +26,8 @@
         @if($company_address->addresses[0]['phone'])
            {{$company_address->addresses[0]['phone']}} <br>
         @endif
+        @if($siret)
+            <b>Siret</b> {{$siret}} <br>
+        @endif
     </p>
 @endif

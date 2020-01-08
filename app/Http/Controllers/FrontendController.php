@@ -294,6 +294,7 @@ class FrontendController extends Controller
             'company_address' => $companyAddress,
             'colors' => $colorSettings,
             'labels' => $labels,
+            'siret' => $company->siret ?? null,
             'taxes' => $taxes
         ]);
         $pdf = PDF::loadView('app.pdf.estimate.'.$estimateTemplate->view);
@@ -369,6 +370,7 @@ class FrontendController extends Controller
             'invoice' => $invoice,
             'company_address' => $companyAddress,
             'logo' => $logo ?? null,
+            'siret' => $company->siret ?? null,
             'colors' => $colorSettings,
             'labels' => $labels,
             'taxes' => $taxes
