@@ -602,6 +602,7 @@
         "state": "State",
         "city": "City",
         "company_name": "Company Name",
+        "siret" : "Numéro de siret",
         "address_street_1": "Address Street 1",
         "address_street_2": "Address Street 2",
         "phone": "Phone",
