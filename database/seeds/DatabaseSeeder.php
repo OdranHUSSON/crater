@@ -15,6 +15,5 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(CountriesTableSeeder::class);
         $this->call(EstimateTemplateSeeder::class);
-        $this->call(InvoiceTemplateSeeder::class);
     }
 }
