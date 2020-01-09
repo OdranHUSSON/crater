@@ -18,8 +18,9 @@ class InvoiceTemplateDefaultData extends Migration
             if(!DB::table($this::TABLE)->where('id', $i)->exists()) {
                 DB::table($this::TABLE)->insert(
                     [
+                        'id' => $i,
                         'name' => 'Template ' . $i,
-                        'view' => 'invoice ' . $i,
+                        'view' => 'invoice' . $i,
                         'path' => '/assets/img/PDF/Template' . $i . '.png',
                         'created_at' => new DateTime('now'),
                         'updated_at' => new DateTime('now')
@@ -36,6 +37,6 @@ class InvoiceTemplateDefaultData extends Migration
      */
     public function down()
     {
-        
+
     }
 }
