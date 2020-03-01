@@ -66,7 +66,7 @@
 
 <table width="100%" cellspacing="0px" style="margin-left:420px; margin-top: 10px" border="0" class="table3 @if(count($invoice->items) > 12) page-break @endif">
     <tr>
-        <td class="no-border" style="color: #55547A; padding-left:10px;  font-size:12px;">Subtotal</td>
+        <td class="no-border" style="color: #55547A; padding-left:10px;  font-size:12px;">Sous-Total</td>
         <td class="no-border items padd2"
             style="padding-right:10px; text-align: right;  font-size:12px; color: #040405; font-weight: 500;">{!! format_money_pdf($invoice->sub_total, $invoice->user->currency) !!}</td>
     </tr>
