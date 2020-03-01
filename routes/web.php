@@ -96,9 +96,16 @@ Route::get('/payment/{invoiceId}/paypal', [
 ]);
 
 Route::get('/pay-now/{invoiceId}/paypal', [
-    'as' => 'payment.paypal',
+    'as' => 'pay.now.paypal',
     'uses' => 'PaypalController@paymentRedirection'
 ]);
+
+Route::get('/payment/success/invoice/{id}/', [
+    'as' => 'payment.success',
+    'uses' => 'PaypalController@paymentSuccess'
+]);
+
+Route::post('ipn/notify','PayPalController@paymentIPN');
 
 
 
