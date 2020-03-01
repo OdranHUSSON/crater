@@ -456,6 +456,10 @@
             margin:0!important;
         }
 
+        table.payment a {
+            color:#7900D8;
+        }
+
         table.payment th {
             font-size:18px;
             font-weight: thin;
@@ -700,6 +704,7 @@
             <tr>
                 <td width="50%">
                     <p><img class="payment" src="assets/img/paypal.svg" /></p>
+                    <p><a href="https://invoice.odran.cc/payment/{{ $invoice->unique_hash }}/paypal">Paiement instantanné</a></p>
                     <p>https://paypal.me/webforger</p>
                 </td>
                 <td>
