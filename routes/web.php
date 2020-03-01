@@ -95,6 +95,13 @@ Route::get('/payment/{invoiceId}/paypal', [
     'uses' => 'PaypalController@paymentPage'
 ]);
 
+Route::get('/pay-now/{invoiceId}/paypal', [
+    'as' => 'payment.paypal',
+    'uses' => 'PaypalController@paymentRedirection'
+]);
+
+
+
 // Setup for instalation of app
 // ----------------------------------------------
 Route::get('/on-boarding', function () {

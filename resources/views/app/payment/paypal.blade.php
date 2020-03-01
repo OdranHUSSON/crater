@@ -60,7 +60,7 @@
                         <h1>Invoice {{ $invoice->invoice_number }}</h1>
                     </div>
                     <div class="col-lg-7">
-                        <a class="pay-now btn btn-primary" href="">Payer maintenant</a>
+                        <a class="pay-now btn btn-primary" href="/pay-now/{{ $invoice->unique_hash }}/paypal">Payer maintenant</a>
                     </div>
                 </div>
             </section>
@@ -79,11 +79,10 @@
                         <p>À payer avant {{$invoice->due_date }}</p>
                     </div>
                     <div class="col-lg-7">
-                        <a class="pay-now btn btn-primary" href="">Payer maintenant</a>
+                        <a class="pay-now btn btn-primary" href="/pay-now/{{ $invoice->unique_hash }}/paypal">Payer maintenant</a>
                     </div>
                 </div>
             </section>
-
         </div>
 
     </body>
