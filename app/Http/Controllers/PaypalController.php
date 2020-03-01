@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Crater\CompanySetting;
 use Crater\Invoice;
 use Crater\Payment;
+use Crater\PaymentMethod;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use Validator;
@@ -31,6 +32,24 @@ class PaypalController extends Controller
         ->where('unique_hash', $invoiceId)->first();
 
         return $invoice;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return PaymentMethod
+     */
+    protected function getOrCreatePaymentMethod($name) {
+        $paymentMethod = PaymentMethod::where('name', $name)->where('company_id', $this::COMPANY_ID)->first();
+
+        if($paymentMethod === NULL) {
+            $paymentMethod = new PaymentMethod();
+            $paymentMethod->name($name);
+            $paymentMethod->company_id($this::COMPANY_ID);
+            $paymentMethod->save();
+        }
+
+        return $paymentMethod;
     }
 
     /**
@@ -143,6 +162,9 @@ class PaypalController extends Controller
     protected function storePayment($invoiceId) {
 
         if ($this->getPaymentByInvoiceId($invoiceId) === NULL) {
+
+            $paymentMethod = $this->getOrCreatePaymentMethod('Paypal');
+
             $invoice = $this->getInvoice($invoiceId);
             $payment_prefix = CompanySetting::getSetting('payment_prefix', $this::COMPANY_ID);
             $payment_number = Payment::getNextPaymentNumber($payment_prefix);
@@ -158,7 +180,7 @@ class PaypalController extends Controller
                 'user_id' => $invoice->user->id,
                 'company_id' => $this::COMPANY_ID,
                 'invoice_id' => $invoice->id,
-                'payment_method_id' => 9,
+                'payment_method_id' => $paymentMethod->id,
                 'amount' => $invoice->total,
                 'notes' => $invoice->unique_hash,
                 'unique_hash' => str_random(60)
