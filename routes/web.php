@@ -88,6 +88,11 @@ Route::get('/expenses/{id}/receipt/{hash}', [
     'uses' => 'ExpensesController@downloadReceipt'
 ]);
 
+Route::get('/online-payment', [
+    'as' => 'payment.paypal',
+    'uses' => 'paypal@paypalController'
+]);
+
 // Setup for instalation of app
 // ----------------------------------------------
 Route::get('/on-boarding', function () {
