@@ -2,12 +2,18 @@
 
 namespace Crater\Http\Controllers;
 
+use Carbon\Carbon;
+use Crater\CompanySetting;
 use Crater\Invoice;
+use Crater\Payment;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\ExpressCheckout;
+use Validator;
 
 class PaypalController extends Controller
 {
+
+    const COMPANY_ID = 1;
 
     /**
      * @param $invoiceId
@@ -28,6 +34,17 @@ class PaypalController extends Controller
     }
 
     /**
+     * @param $invoiceId
+     *
+     * @return mixed
+     */
+    protected function getPaymentByInvoiceId($invoiceId) {
+        $payment = Payment::where('notes', $invoiceId)->first();
+
+        return $payment;
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function paymentPage($invoiceId)
@@ -38,6 +55,12 @@ class PaypalController extends Controller
             ->with('invoice', $invoice);
     }
 
+    /**
+     * @param $invoiceId
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
     public function paymentRedirection($invoiceId)
     {
         $provider = new ExpressCheckout;
@@ -57,7 +80,7 @@ class PaypalController extends Controller
 
         $data['invoice_id'] = $invoice->invoice_number;
         $data['invoice_description'] = $invoice->invoice_number . ' ' . $invoice->user->name;
-        $data['return_url'] = url('/payment/success');
+        $data['return_url'] = url('/payment/success/invoice/' . $invoiceId . '/');
         $data['cancel_url'] = url('/payment/cancel');
 
         $total = 0;
@@ -75,7 +98,71 @@ class PaypalController extends Controller
         }
 
         $response = $provider->setExpressCheckout($data);
-        
+
         return redirect($response['paypal_link']);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @throws \Exception
+     */
+    public function paymentIPN(Request $request)
+    {
+        $provider = new ExpressCheckout;
+
+        $request->merge(['cmd' => '_notify-validate']);
+        $post = $request->all();
+
+        $response = (string) $provider->verifyIPN($post);
+
+        if ($response === 'VERIFIED') {
+            // @TODO
+        }
+    }
+
+    /**
+     * @param $invoiceId
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function paymentSuccess($invoiceId) {
+        $invoice = $this->getInvoice($invoiceId);
+
+        $this->storePayment($invoiceId);
+
+        return view('app/payment/success')
+            ->with('invoice', $invoice)
+            ->with('total', round($invoice->total/100))
+            ->with('cents', substr($invoice->total, -2));
+    }
+
+    /**
+     * @param $invoiceId
+     */
+    protected function storePayment($invoiceId) {
+
+        if ($this->getPaymentByInvoiceId($invoiceId) === NULL) {
+            $invoice = $this->getInvoice($invoiceId);
+            $payment_prefix = CompanySetting::getSetting('payment_prefix', $this::COMPANY_ID);
+            $payment_number = Payment::getNextPaymentNumber($payment_prefix);
+            $payment_date = Carbon::createFromFormat('d/m/Y', date('d/m/Y'));
+            $invoice->status = Invoice::STATUS_COMPLETED;
+            $invoice->paid_status = Invoice::STATUS_PAID;
+            $invoice->due_amount = 0;
+            $invoice->save();
+
+            $payment = Payment::create([
+                'payment_date' => $payment_date,
+                'payment_number' => $payment_prefix . '-' .$payment_number,
+                'user_id' => $invoice->user->id,
+                'company_id' => $this::COMPANY_ID,
+                'invoice_id' => $invoice->id,
+                'payment_method_id' => 9,
+                'amount' => $invoice->total,
+                'notes' => $invoice->unique_hash,
+                'unique_hash' => str_random(60)
+            ]);
+        }
     }
 }
