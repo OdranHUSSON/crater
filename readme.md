@@ -2,9 +2,10 @@
 
 Changes in this fork :
  - fix missing informations that are mandatory in France for invoices 
- - improve french translations
- - new invoice templates WIP
+ - improved french translations
+ - new invoice template
  - MULTIACCOUNT
+ - PAYPAL payment
 
 
 ## Crater

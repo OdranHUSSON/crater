@@ -88,6 +88,27 @@ Route::get('/expenses/{id}/receipt/{hash}', [
     'uses' => 'ExpensesController@downloadReceipt'
 ]);
 
+
+// payment pages
+Route::get('/payment/{invoiceId}/paypal', [
+    'as' => 'payment.paypal',
+    'uses' => 'PaypalController@paymentPage'
+]);
+
+Route::get('/pay-now/{invoiceId}/paypal', [
+    'as' => 'pay.now.paypal',
+    'uses' => 'PaypalController@paymentRedirection'
+]);
+
+Route::get('/payment/success/invoice/{id}/', [
+    'as' => 'payment.success',
+    'uses' => 'PaypalController@paymentSuccess'
+]);
+
+Route::post('ipn/notify','PayPalController@paymentIPN');
+
+
+
 // Setup for instalation of app
 // ----------------------------------------------
 Route::get('/on-boarding', function () {
