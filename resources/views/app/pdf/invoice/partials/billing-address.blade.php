@@ -1,5 +1,5 @@
 @if($invoice->user->billingaddress)
-    <p class="bill-to">Bill To,</p>
+    <p class="bill-to">Facturé à,</p>
     @if($invoice->user->billingaddress->name)
         <p class="bill-user-name">
             {{$invoice->user->billingaddress->name}}
