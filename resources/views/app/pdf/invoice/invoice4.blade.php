@@ -135,6 +135,11 @@
             margin: 0px;
         }
 
+        .company-add a {
+            color:#7900D8;
+            text-align: left;
+        }
+
         /* -------------------------- */
         /* shipping style */
         .ship-to {
@@ -247,7 +252,7 @@
         }
 
         .main-table-header th {
-            background: #1d5b7c!important;
+            background: #7900D8!important;
             color: #FFF!important;
         }
         .main-table-header td {
@@ -423,14 +428,66 @@
         }
 
 
+        table.stripped {
+            width:100%!important;
+        }
+
         table.stripped tr {
             height: 50px!important;
         }
-        table.stripped tr:nth-child(odd) {
-            background: #dfdfdf;
-        }
         table.stripped tr:nth-child(even) {
-            background: #cbcace;
+            background: #FFF;
+        }
+        table.stripped tr:nth-child(odd) {
+            background: #EFEFEF;
+        }
+
+
+        table.payment {
+            border-top:1px solid #EFEFEF;
+            width: 100%;
+            text-align: center;
+            font-weight: 200;
+            color:#AFB0B0;
+        }
+
+        table.payment p {
+            line-height: 14px;
+            margin:0!important;
+        }
+
+        table.payment th {
+            font-size:18px;
+            font-weight: thin;
+            letter-spacing: 4px;
+            padding-bottom:10px;
+            color:#4C4B4C;
+            text-transform: uppercase;
+        }
+
+        img.payment {
+            width: 60px;
+            margin:0;
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 3cm;
+            width: 100%;
+        }
+
+        #footer-text {
+            position: fixed;
+            bottom: 3cm;
+            left: 0cm;
+            right: 0cm;
+            height: 5.5cm;
+            color:#4C4B4C;
+
+            width: 100%;
         }
     </style>
 </head>
@@ -443,13 +500,13 @@
                     <img class="header-logo" src="{{ $logo }}" alt="Company Logo">
             @else
                 @if($invoice->user->company)
-                    <td class="header-left" style="padding-top:0px;">
-                    <h1 class="header-logo"> {{$invoice->user->company->name}} </h1>
+                    <td class="header-left">
+                    <img class="header-logo" src="https://webforger.fr/images/logo.svg" alt="Webforger.fr"/>
                 @endif
             @endif
                     </td>
                     <td class="header-right company-details">
-                        <h1>INVOICE</h1>
+                        <h1 style="text-transform: uppercase; font-size:28px; letter-spacing: 12px; font-weight:bolder;">Facture</h1>
                         @include('app.pdf.invoice.partials.company-address')
                     </td>
         </tr>
@@ -477,15 +534,15 @@
                 <div class="job-add">
                     <table>
                         <tr>
-                            <td class="textStyle1" style="text-align: left; color: #55547A">Invoice Number</td>
+                            <td class="textStyle1" style="text-align: left; color: #55547A">Facture N°</td>
                             <td class="textStyle2"> &nbsp;{{$invoice->invoice_number}}</td>
                         </tr>
                         <tr>
-                            <td class="textStyle1" style="text-align: left; color: #55547A">Invoice Date </td>
+                            <td class="textStyle1" style="text-align: left; color: #55547A">Date </td>
                             <td class="textStyle2"> &nbsp;{{$invoice->formattedInvoiceDate}}</td>
                         </tr>
                         <tr>
-                            <td class="textStyle1" style="text-align: left; color: #55547A">Due date</td>
+                            <td class="textStyle1" style="text-align: left; color: #55547A">Paiement avant</td>
                             <td class="textStyle2"> &nbsp;{{$invoice->formattedDueDate}}</td>
                         </tr>
                     </table>
@@ -497,13 +554,13 @@
         <table width="100%" class="table2 stripped" cellspacing="0" border="0">
             <tr class="main-table-header">
                 <th width="2%" class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">#</th>
-                <th width="40%" class="ItemTableHeader" style="text-align: left; color: #55547A; padding-left: 0px">Items</th>
-                <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">Quantity</th>
-                <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">Price</th>
+                <th width="40%" class="ItemTableHeader" style="text-align: left; color: #55547A; padding-left: 0px">Article</th>
+                <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">Quantité</th>
+                <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">Prix</th>
                 @if($invoice->discount_per_item === 'YES')
-                    <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-left: 10px">Discount</th>
+                    <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-left: 10px">Promotion</th>
                 @endif
-                <th class="ItemTableHeader" style="text-align: right; color: #55547A;">Amount</th>
+                <th class="ItemTableHeader" style="text-align: right; color: #55547A;">Total</th>
             </tr>
             @php
                 $index = 1
@@ -562,7 +619,7 @@
 
         <table width="100%" cellspacing="0px" style="margin-left:420px; margin-top: 10px" border="0" class="table3 @if(count($invoice->items) > 12) page-break @endif">
             <tr>
-                <td class="no-border" style="color: #55547A; padding-left:10px;  font-size:12px;">Subtotal</td>
+                <td class="no-border" style="color: #55547A; padding-left:10px;  font-size:12px;">Sous-Total</td>
                 <td class="no-border items padd2"
                     style="padding-right:10px; text-align: right;  font-size:12px; color: #040405; font-weight: 500;">{!! format_money_pdf($invoice->sub_total, $invoice->user->currency) !!}</td>
             </tr>
@@ -595,10 +652,10 @@
                 <tr>
                     <td class="no-border" style="padding-left:10px; text-align:left; font-size:12px; color: #55547A;">
                         @if($invoice->discount_type === 'fixed')
-                            Discount
+                            Promotion
                         @endif
                         @if($invoice->discount_type === 'percentage')
-                            Discount ({{$invoice->discount}}%)
+                            Promotion ({{$invoice->discount}}%)
                         @endif
                     </td>
                     <td class="no-border items padd2" style="padding-right:10px; font-weight: 500; text-align: right; font-size:12px;  color: #040405">
@@ -615,7 +672,7 @@
                 <td style="padding:3px 0px"></td>
                 <td style="padding:3px 0px"></td>
             </tr>
-            <tr style="background: #1d5b7c; color:#FFF;">
+            <tr style="background: #7900D8; color:#FFF;">
                 <td class="no-border total-border-left"
                     style="padding-left:10px; padding-bottom:10px; text-align:left; padding-top:20px; font-size:12px; "
                 >
@@ -632,18 +689,31 @@
 
         @include('app.pdf.invoice.partials.notes')
 
-        <footer>
-            <b>Paiement :</b>
-            <ul>
-                <li>Paypal : https://paypal.com/webforger</li>
-                <li>IBAN : FR76 5676 6789 5678 5678</li>
-            </ul>
-
-            @if($siret)
-                <p>{{ $invoice->user->company->name }} est une société enregistre avec le numéro de siret {{$siret}} <br>
-            @endif
-        </footer>
 
     </div>
+
+    <footer id="footer-text">
+        <table class="payment">
+            <tr>
+                <th colspan="2">Méthodes de paiements</th>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p><img class="payment" src="assets/img/paypal.svg" /></p>
+                    <p>https://paypal.me/webforger</p>
+                </td>
+                <td>
+                    <p><img class="payment" src="assets/img/bank.svg" /></p>
+                    <p>IBAN : FR76 5676 6789 5678 5678</p>
+                </td>
+            </tr>
+        </table>
+        <h2 style="display: block; width: 100%; text-align: center; font-weight:bold; text-transform: uppercase">Merci de nous avoir choisis</h2>
+
+        @if($siret)
+            <p style="display: block; width: 100%; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $invoice->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>
+        @endif
+    </footer>
+    <img id="footer" src="assets/img/invoice4footer.png" />
 </body>
 </html>
