@@ -18,11 +18,11 @@ return [
         'password'    => env('PAYPAL_LIVE_API_PASSWORD', ''),
         'secret'      => env('PAYPAL_LIVE_API_SECRET', ''),
         'certificate' => env('PAYPAL_LIVE_API_CERTIFICATE', ''),
-        'app_id'      => '', // Used for Adaptive Payments API
+        'app_id'      => env('PAYPAL_APP_ID', ''), // Used for Adaptive Payments API
     ],
 
     'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'
-    'currency'       => env('PAYPAL_CURRENCY', 'USD'),
+    'currency'       => env('PAYPAL_CURRENCY', 'EUR'),
     'billing_type'   => 'MerchantInitiatedBilling',
     'notify_url'     => '', // Change this accordingly for your application.
     'locale'         => '', // force gateway language  i.e. it_IT, es_ES, en_US ... (for express checkout only)
