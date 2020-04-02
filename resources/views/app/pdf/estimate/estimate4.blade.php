@@ -543,16 +543,16 @@
                 <div class="job-add">
                     <table>
                         <tr>
-                            <td class="textStyle1" style="text-align: left; color: #55547A">Facture N°</td>
-                            <td class="textStyle2"> &nbsp;{{$estimate->invoice_number}}</td>
+                            <td class="textStyle1" style="text-align: left; color: #55547A">Devis N°</td>
+                            <td class="textStyle2"> &nbsp;{{$estimate->estimate_number}}</td>
                         </tr>
                         <tr>
                             <td class="textStyle1" style="text-align: left; color: #55547A">Date </td>
-                            <td class="textStyle2"> &nbsp;{{$estimate->formattedInvoiceDate}}</td>
+                            <td class="textStyle2"> &nbsp;{{$estimate->formattedEstimateDate}}</td>
                         </tr>
                         <tr>
-                            <td class="textStyle1" style="text-align: left; color: #55547A">Paiement avant</td>
-                            <td class="textStyle2"> &nbsp;{{$estimate->formattedDueDate}}</td>
+                            <td class="textStyle1" style="text-align: left; color: #55547A">Date d'expiration</td>
+                            <td class="textStyle2"> &nbsp;{{$estimate->formattedExpiryDate}}</td>
                         </tr>
                     </table>
                 </div>
