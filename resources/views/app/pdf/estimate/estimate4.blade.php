@@ -503,15 +503,15 @@
                 <td class="header-left">
                     <img class="header-logo" src="{{ $logo }}" alt="Company Logo">
             @else
-                @if($invoice->user->company)
+                @if($estimate->user->company)
                     <td class="header-left">
                         <img class="header-logo" src="https://webforger.fr/images/logo.svg" alt="Webforger.fr"/>
                         @endif
                         @endif
                     </td>
                     <td class="header-right company-details">
-                        <h1 style="text-transform: uppercase; font-size:28px; letter-spacing: 12px; font-weight:bolder;">Facture</h1>
-                        @include('app.pdf.invoice.partials.company-address')
+                        <h1 style="text-transform: uppercase; font-size:28px; letter-spacing: 12px; font-weight:bolder;">DEVIS</h1>
+                        @include('app.pdf.estimate.partials.company-address')
                     </td>
         </tr>
     </table>
@@ -523,14 +523,14 @@
     <div class="address">
         <div class="bill-add">
             <div style="float:left;">
-                @include('app.pdf.invoice.partials.billing-address')
+                @include('app.pdf.estimate.partials.billing-address')
             </div>
-            @if($invoice->user->billingaddress)
+            @if($estimate->user->billingaddress)
                 <div style="float:right;">
                     @else
                         <div style="float:left;">
                             @endif
-                            @include('app.pdf.invoice.partials.shipping-address')
+                            @include('app.pdf.estimate.partials.shipping-address')
                         </div>
                         <div style="clear: both;"></div>
                 </div>
@@ -539,15 +539,15 @@
                     <table>
                         <tr>
                             <td class="textStyle1" style="text-align: left; color: #55547A">Facture N°</td>
-                            <td class="textStyle2"> &nbsp;{{$invoice->invoice_number}}</td>
+                            <td class="textStyle2"> &nbsp;{{$estimate->invoice_number}}</td>
                         </tr>
                         <tr>
                             <td class="textStyle1" style="text-align: left; color: #55547A">Date </td>
-                            <td class="textStyle2"> &nbsp;{{$invoice->formattedInvoiceDate}}</td>
+                            <td class="textStyle2"> &nbsp;{{$estimate->formattedInvoiceDate}}</td>
                         </tr>
                         <tr>
                             <td class="textStyle1" style="text-align: left; color: #55547A">Paiement avant</td>
-                            <td class="textStyle2"> &nbsp;{{$invoice->formattedDueDate}}</td>
+                            <td class="textStyle2"> &nbsp;{{$estimate->formattedDueDate}}</td>
                         </tr>
                     </table>
                 </div>
@@ -561,7 +561,7 @@
                 <th width="40%" class="ItemTableHeader" style="text-align: left; color: #55547A; padding-left: 0px">Article</th>
                 <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">Quantité</th>
                 <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-right: 20px">Prix</th>
-                @if($invoice->discount_per_item === 'YES')
+                @if($estimate->discount_per_item === 'YES')
                     <th class="ItemTableHeader" style="text-align: right; color: #55547A; padding-left: 10px">Promotion</th>
                 @endif
                 <th class="ItemTableHeader" style="text-align: right; color: #55547A;">Total</th>
@@ -569,7 +569,7 @@
             @php
                 $index = 1
             @endphp
-            @foreach ($invoice->items as $item)
+            @foreach ($estimate->items as $item)
                 <tr class="item-details">
                     <td
                             class="inv-item items"
@@ -594,12 +594,12 @@
                             class="inv-item items"
                             style="text-align: right; color: #040405; padding-right: 20px"
                     >
-                        {!! format_money_pdf($item->price, $invoice->user->currency) !!}
+                        {!! format_money_pdf($item->price, $estimate->user->currency) !!}
                     </td>
-                    @if($invoice->discount_per_item === 'YES')
+                    @if($estimate->discount_per_item === 'YES')
                         <td class="inv-item items" style="text-align: right; color: #040405; padding-left: 10px">
                             @if($item->discount_type === 'fixed')
-                                {!! format_money_pdf($item->discount_val, $invoice->user->currency) !!}
+                                {!! format_money_pdf($item->discount_val, $estimate->user->currency) !!}
                             @endif
                             @if($item->discount_type === 'percentage')
                                 {{$item->discount}}%
@@ -610,7 +610,7 @@
                             class="inv-item items"
                             style="text-align: right; color: #040405;"
                     >
-                        {!! format_money_pdf($item->total, $invoice->user->currency) !!}
+                        {!! format_money_pdf($item->total, $estimate->user->currency) !!}
                     </td>
                 </tr>
                 @php
@@ -621,53 +621,53 @@
 
         <hr class="items-table-hr">
 
-        <table width="100%" cellspacing="0px" style="margin-left:420px; margin-top: 10px" border="0" class="table3 @if(count($invoice->items) > 12) page-break @endif">
+        <table width="100%" cellspacing="0px" style="margin-left:420px; margin-top: 10px" border="0" class="table3 @if(count($estimate->items) > 12) page-break @endif">
             <tr>
                 <td class="no-border" style="color: #55547A; padding-left:10px;  font-size:12px;">Sous-Total</td>
                 <td class="no-border items padd2"
-                    style="padding-right:10px; text-align: right;  font-size:12px; color: #040405; font-weight: 500;">{!! format_money_pdf($invoice->sub_total, $invoice->user->currency) !!}</td>
+                    style="padding-right:10px; text-align: right;  font-size:12px; color: #040405; font-weight: 500;">{!! format_money_pdf($estimate->sub_total, $estimate->user->currency) !!}</td>
             </tr>
 
-            @if ($invoice->tax_per_item === 'YES')
+            @if ($estimate->tax_per_item === 'YES')
                 @for ($i = 0; $i < count($labels); $i++)
                     <tr>
                         <td class="no-border" style="padding-left:10px; text-align:left; font-size:12px;  color: #55547A;">
                             {{$labels[$i]}}
                         </td>
                         <td class="no-border items padd2" style="padding-right:10px; font-weight: 500; text-align: right; font-size:12px;  color: #040405">
-                            {!! format_money_pdf($taxes[$i], $invoice->user->currency) !!}
+                            {!! format_money_pdf($taxes[$i], $estimate->user->currency) !!}
                         </td>
                     </tr>
                 @endfor
             @else
-                @foreach ($invoice->taxes as $tax)
+                @foreach ($estimate->taxes as $tax)
                     <tr>
                         <td class="no-border" style="padding-left:10px; text-align:left; font-size:12px;  color: #55547A;">
                             {{$tax->name.' ('.$tax->percent.'%)'}}
                         </td>
                         <td class="no-border items padd2" style="padding-right:10px; font-weight: 500; text-align: right; font-size:12px;  color: #040405">
-                            {!! format_money_pdf($tax->amount, $invoice->user->currency) !!}
+                            {!! format_money_pdf($tax->amount, $estimate->user->currency) !!}
                         </td>
                     </tr>
                 @endforeach
             @endif
 
-            @if ($invoice->discount_per_item === 'NO')
+            @if ($estimate->discount_per_item === 'NO')
                 <tr>
                     <td class="no-border" style="padding-left:10px; text-align:left; font-size:12px; color: #55547A;">
-                        @if($invoice->discount_type === 'fixed')
+                        @if($estimate->discount_type === 'fixed')
                             Promotion
                         @endif
-                        @if($invoice->discount_type === 'percentage')
-                            Promotion ({{$invoice->discount}}%)
+                        @if($estimate->discount_type === 'percentage')
+                            Promotion ({{$estimate->discount}}%)
                         @endif
                     </td>
                     <td class="no-border items padd2" style="padding-right:10px; font-weight: 500; text-align: right; font-size:12px;  color: #040405">
-                        @if($invoice->discount_type === 'fixed')
-                            {!! format_money_pdf($invoice->discount_val, $invoice->user->currency) !!}
+                        @if($estimate->discount_type === 'fixed')
+                            {!! format_money_pdf($estimate->discount_val, $estimate->user->currency) !!}
                         @endif
-                        @if($invoice->discount_type === 'percentage')
-                            {!! format_money_pdf($invoice->discount_val, $invoice->user->currency) !!}
+                        @if($estimate->discount_type === 'percentage')
+                            {!! format_money_pdf($estimate->discount_val, $estimate->user->currency) !!}
                         @endif
                     </td>
                 </tr>
@@ -686,12 +686,12 @@
                         class="no-border total-border-right items padd8"
                         style="padding-right:10px; font-weight: 500; text-align: right; font-size:12px;  padding-top:20px; color: #FFF"
                 >
-                    {!! format_money_pdf($invoice->total, $invoice->user->currency)!!}
+                    {!! format_money_pdf($estimate->total, $estimate->user->currency)!!}
                 </td>
             </tr>
         </table>
 
-        @include('app.pdf.invoice.partials.notes')
+        @include('app.pdf.estimate.partials.notes')
 
 
     </div>
@@ -704,7 +704,7 @@
             <tr>
                 <td width="50%">
                     <p><img class="payment" src="assets/img/paypal.svg" /></p>
-                    <p><a href="https://invoice.odran.cc/payment/{{ $invoice->unique_hash }}/paypal">Paiement instantanné</a></p>
+                    <p><a href="https://estimate.odran.cc/payment/{{ $estimate->unique_hash }}/paypal">Paiement instantanné</a></p>
                     <p>https://paypal.me/webforger</p>
                 </td>
                 <td>
@@ -716,7 +716,7 @@
         <h2 style="display: block; width: 100%; text-align: center; font-weight:bold; text-transform: uppercase">Merci de nous avoir choisis</h2>
 
         @if($siret)
-            <p style="display: block; width: 100%; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $invoice->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>
+            <p style="display: block; width: 100%; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $estimate->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>
         @endif
     </footer>
     <img id="footer" src="assets/img/invoice4footer.png" />
