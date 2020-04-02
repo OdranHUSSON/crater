@@ -709,7 +709,8 @@
                 </td>
                 <td>
                     <p><img class="payment" src="assets/img/bank.svg" /></p>
-                    <p>IBAN : FR76 5676 6789 5678 5678</p>
+                    <p>HUSSON Odran Alex</p>
+                    <p>IBAN : FR76 1513 5005 0008 0047 7323 470</p>
                 </td>
             </tr>
         </table>
