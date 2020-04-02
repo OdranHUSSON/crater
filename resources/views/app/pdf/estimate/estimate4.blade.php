@@ -709,7 +709,6 @@
             <tr>
                 <td width="50%">
                     <p><img class="payment" src="assets/img/paypal.svg" /></p>
-                    <p><a href="https://invoice.odran.cc/payment/{{ $estimate->unique_hash }}/paypal">Paiement instantanné</a></p>
                     <p>https://paypal.me/webforger</p>
                 </td>
                 <td>
