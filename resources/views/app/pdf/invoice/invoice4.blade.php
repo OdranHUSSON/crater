@@ -452,8 +452,13 @@
         }
 
         table.payment p {
-            line-height: 14px;
+            font-size:10px;
+            line-height: 10px;
             margin:0!important;
+        }
+
+        table.payment p.small {
+            line-height: 8px;
         }
 
         table.payment a {
@@ -709,8 +714,9 @@
                 </td>
                 <td>
                     <p><img class="payment" src="assets/img/bank.svg" /></p>
-                    <p>HUSSON Odran Alex</p>
+                    <p class="small">HUSSON Odran Alex - Caisse d'Épargne Grand Est Europe</p>
                     <p>IBAN : FR76 1513 5005 0008 0047 7323 470</p>
+                    <p>BIC/SWIFT : CEPAFRPP513</p>
                 </td>
             </tr>
         </table>
