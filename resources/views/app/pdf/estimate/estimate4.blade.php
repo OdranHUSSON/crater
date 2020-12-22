@@ -713,7 +713,6 @@
                 </td>
             </tr>
         </table>
-        <h2 style="display: block; width: 100%; text-align: center; font-weight:bold; text-transform: uppercase">Merci de votre confiance</h2>
 
         @if($siret)
             <p style="display: block; width: 100%; color:#000; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $estimate->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>

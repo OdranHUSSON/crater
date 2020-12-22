@@ -493,7 +493,7 @@
             bottom: 3cm;
             left: 0cm;
             right: 0cm;
-            height: 5.5cm;
+            height: 3.5cm;
             color:#4C4B4C;
 
             width: 100%;
@@ -705,13 +705,6 @@
         <table class="payment">
             <tr>
                 <th colspan="2">Méthodes de paiements</th>
-            </tr>
-            <tr>
-                <td width="50%">
-                    <p><img class="payment" src="assets/img/paypal.svg" /></p>
-                    <p><a href="https://invoice.odran.cc/payment/{{ $invoice->unique_hash }}/paypal">Paiement instantanné</a></p>
-                    <p>https://paypal.me/webforger</p>
-                </td>
                 <td>
                     <p><img class="payment" src="assets/img/bank.svg" /></p>
                     <p class="small">HUSSON Odran Alex - Caisse d'Épargne Grand Est Europe</p>
@@ -720,11 +713,10 @@
                 </td>
             </tr>
         </table>
-        @if($siret)
-            <p style="display: block; width: 100%; color:#000; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $invoice->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>
-        @endif
-        <h2 style="display: block; width: 100%; text-align: center; font-weight:bold; text-transform: uppercase">Merci de votre confiance</h2>
 
+        @if($siret)
+            <p style="display: block; width: 100%; color:#000; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $estimate->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>
+        @endif
     </footer>
     <img id="footer" src="assets/img/invoice4footer.png" />
 </body>
