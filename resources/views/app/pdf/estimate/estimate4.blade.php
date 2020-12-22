@@ -107,7 +107,7 @@
         .bill-add {
             display: block;
             float:left;
-            width:40%;
+            width:55%;
             padding: 0 0 0 30px;
         }
         .company {
