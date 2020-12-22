@@ -715,7 +715,7 @@
         </table>
 
         @if($siret)
-            <p style="display: block; width: 100%; color:#000; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $estimate->user->company->name }}</span> / Odran HUSSON est une société enregistre avec le numéro de siret {{$siret}} <br>
+            <p style="display: block; width: 100%; color:#000; text-align: center; font-size:8px;"><span style="text-transform: capitalize">{{ $estimate->user->company->name }}</span> / Odran HUSSON est une société enregistré avec le numéro de siret {{$siret}} <br>
         @endif
     </footer>
     <img id="footer" src="assets/img/invoice4footer.png" />
