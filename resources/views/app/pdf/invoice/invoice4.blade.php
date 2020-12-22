@@ -107,7 +107,7 @@
         .bill-add {
             display: block;
             float:left;
-            width:40%;
+            width:55%;
             padding: 0 0 0 30px;
         }
         .company {
@@ -527,13 +527,13 @@
 <div class="wrapper">
     <div class="address">
         <div class="bill-add">
-            <div style="float:left;">
+            <div style="float:left; min-width:400px;">
                 @include('app.pdf.invoice.partials.billing-address')
             </div>
             @if($invoice->user->billingaddress)
                 <div style="float:right;">
                     @else
-                        <div style="float:left;">
+                        <div style="float:left; min-width:400px;">
                             @endif
                             @include('app.pdf.invoice.partials.shipping-address')
                         </div>
