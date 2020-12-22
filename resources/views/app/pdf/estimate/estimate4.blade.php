@@ -493,7 +493,7 @@
             bottom: 3cm;
             left: 0cm;
             right: 0cm;
-            height: 5.5cm;
+            height: 3.5cm;
             color:#4C4B4C;
 
             width: 100%;
@@ -705,12 +705,6 @@
         <table class="payment">
             <tr>
                 <th colspan="2">Méthodes de paiements</th>
-            </tr>
-            <tr>
-                <td width="50%">
-                    <p><img class="payment" src="assets/img/paypal.svg" /></p>
-                    <p>https://paypal.me/webforger</p>
-                </td>
                 <td>
                     <p><img class="payment" src="assets/img/bank.svg" /></p>
                     <p class="small">HUSSON Odran Alex - Caisse d'Épargne Grand Est Europe</p>
