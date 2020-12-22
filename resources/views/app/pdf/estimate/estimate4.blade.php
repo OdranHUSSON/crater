@@ -527,13 +527,13 @@
 <div class="wrapper">
     <div class="address">
         <div class="bill-add">
-            <div style="float:left;">
+            <div style="float:left; min-width:400px;">
                 @include('app.pdf.estimate.partials.billing-address')
             </div>
             @if($estimate->user->billingaddress)
                 <div style="float:right;">
                     @else
-                        <div style="float:left;">
+                        <div style="float:left;min-width:400px;">
                             @endif
                             @include('app.pdf.estimate.partials.shipping-address')
                         </div>
